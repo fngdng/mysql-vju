@@ -2,6 +2,7 @@ def show_vocab_lookup(user_name):
     import tkinter as tk
     import sqlite3
     from modules.menu import show_menu
+    from modules.vocab_add import show_vocab_add
 
     win = tk.Tk()
     win.title("Tra từ vựng")
@@ -40,13 +41,14 @@ def show_vocab_lookup(user_name):
         conn.close()
 
         if row:
-            result.config(text=f"Từ: {row[0]}\\nKana: {row[1]}\\nNghĩa: {row[2]}")
-
+            result.config(text=f"Từ: {row[0]}\nKana: {row[1]}\nNghĩa: {row[2]}")
         else:
             result.config(text="❌ Không tìm thấy từ trong cơ sở dữ liệu.")
 
     tk.Button(win, text="Tra từ", font=("Arial", 12), bg="#27ae60", fg="white", command=tra_tu).pack(pady=10)
 
     tk.Button(win, text="⬅ Quay lại menu", font=("Arial", 11), bg="#dfe6e9", command=lambda: (win.destroy(), show_menu(user_name))).pack(pady=10)
+
+    tk.Button(win, text="➕ Thêm từ mới", font=("Arial", 11), bg="#a29bfe", fg="white", command=lambda: (win.destroy(), show_vocab_add(user_name))).pack(pady=5)
 
     win.mainloop()
