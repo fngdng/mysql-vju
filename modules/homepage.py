@@ -2,6 +2,11 @@ def show_homepage(user_name):
     import tkinter as tk
     from modules.login import login_window
 
+    def open_feature_selection():
+        home.destroy()
+        from modules.menu import show_menu
+        show_menu(user_name)
+
     home = tk.Tk()
     home.title("Trang chủ")
     home.geometry("900x600")
@@ -39,13 +44,14 @@ def show_homepage(user_name):
 
     btn_start = tk.Button(
         home,
-        text="Bắt đầu học",
+        text="Vào học",
         font=("Arial", 14, "bold"),
-        bg="#27ae60",
+        bg="#2980b9",
         fg="white",
         padx=20,
         pady=10,
-        relief="flat"
+        relief="flat",
+        command=open_feature_selection
     )
     btn_start.pack(pady=30)
 
