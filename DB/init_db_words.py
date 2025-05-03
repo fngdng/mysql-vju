@@ -1,21 +1,18 @@
 import sqlite3
 
-# Kết nối SQLite (tạo nếu chưa tồn tại)
-conn = sqlite3.connect("japanese.db")
+conn = sqlite3.connect("D:/Japanese_learning_app/DB/japanese.db")
 cursor = conn.cursor()
 
-# Tạo bảng Words
 cursor.execute("""
-CREATE TABLE IF NOT EXISTS Words (
+CREATE TABLE IF NOT EXISTS Users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    japanese TEXT NOT NULL,
-    kana TEXT,
-    meaning TEXT,
-    topic TEXT
-)
+    name TEXT NOT NULL,
+    email TEXT NOT NULL UNIQUE,
+    password TEXT NOT NULL,
+    birthday TEXT
+);
 """)
 
 conn.commit()
 conn.close()
-
-print(" Đã tạo xong cơ sở dữ liệu và bảng Words.")
+print("Xong")
