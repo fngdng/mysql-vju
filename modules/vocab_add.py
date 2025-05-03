@@ -27,7 +27,7 @@ def show_vocab_add(user_name):
             messagebox.showwarning("Thiếu dữ liệu", "Vui lòng nhập ít nhất từ và nghĩa.")
             return
 
-        conn = sqlite3.connect("D:/Japanese_learning_app/japanese.db")
+        conn = sqlite3.connect("D:/Japanese_learning_app/DB/japanese.db")
         cursor = conn.cursor()
         cursor.execute("INSERT INTO Words (japanese, kana, meaning, topic) VALUES (?, ?, ?, ?)",
                        (japanese, kana, meaning, topic))

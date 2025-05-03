@@ -29,7 +29,7 @@ def show_vocab_lookup(user_name):
             result.config(text="⚠️ Vui lòng nhập từ cần tra")
             return
 
-        conn = sqlite3.connect("D:/Japanese_learning_app/japanese.db")
+        conn = sqlite3.connect("D:/Japanese_learning_app/DB/japanese.db")
         cursor = conn.cursor()
 
         if mode_var.get() == "jp":

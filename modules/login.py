@@ -11,7 +11,7 @@ def login_window():
         email = entry_email.get()
         password = entry_password.get()
 
-        conn = sqlite3.connect("D:/Japanese_learning_app/japanese.db")
+        conn = sqlite3.connect("D:/Japanese_learning_app/DB/japanese.db")
         cursor = conn.cursor()
         cursor.execute("SELECT name FROM Users WHERE email = ? AND password = ?", (email, password))
         user = cursor.fetchone()

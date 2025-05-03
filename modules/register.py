@@ -16,7 +16,7 @@ def register_window():
             return
 
         try:
-            conn = sqlite3.connect("D:/Japanese_learning_app/japanese.db")
+            conn = sqlite3.connect("D:/Japanese_learning_app/DB/japanese.db")
             cursor = conn.cursor()
             cursor.execute("""
                 INSERT INTO Users (name, email, password, birthday)
