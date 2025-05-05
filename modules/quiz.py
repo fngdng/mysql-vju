@@ -34,11 +34,13 @@ def show_quiz(user_name):
 
     open_mode_selection()
 
+
 def show_quiz_meaning_to_japanese(user_name):
     run_quiz(user_name, mode="meaning_to_japanese")
 
 def show_quiz_japanese_to_meaning(user_name):
     run_quiz(user_name, mode="japanese_to_meaning")
+
 
 def run_quiz(user_name, mode="japanese_to_meaning"):
     win = tk.Tk()
@@ -56,12 +58,13 @@ def run_quiz(user_name, mode="japanese_to_meaning"):
     tk.Label(win, text=f"🔍 {user_name}, hãy chọn đáp án đúng:", font=("Arial", 14), bg="#f7f9fa").pack(pady=20)
 
     def get_quiz_data():
-        conn = sqlite3.connect('./DB/japanese.db')
-        cursor = conn.cursor()
-        cursor.execute("SELECT japanese, romaji, meaning FROM Words WHERE japanese IS NOT NULL AND romaji IS NOT NULL AND meaning IS NOT NULL")
-        data = cursor.fetchall()
-        conn.close()
-        return [row for row in data if all(row)]
+      conn = sqlite3.connect('./DB/japanese.db')
+      cursor = conn.cursor()
+      cursor.execute("SELECT japanese, kana, meaning FROM Words WHERE japanese IS NOT NULL AND kana IS NOT NULL AND meaning IS NOT NULL")
+      data = cursor.fetchall()
+      conn.close()
+      return [row for row in data if all(row)]
+
 
     all_data = get_quiz_data()
     random.shuffle(all_data)
@@ -78,17 +81,17 @@ def run_quiz(user_name, mode="japanese_to_meaning"):
             return None, None, None
 
         row = quiz_data[state["current_index"]]
-        japanese, romaji, meaning = row
+        japanese, kana, meaning = row
 
         current_num = state["current_index"] + 1
         total = len(quiz_data)
 
         if mode == "meaning_to_japanese":
             question_text = f"Câu {current_num}/{total}: \"{meaning}\" là từ nào sau đây?"
-            correct = f"{japanese} ({romaji})"
+            correct = f"{japanese} ({kana})"
             wrongs = [f"{r[0]} ({r[1]})" for i, r in enumerate(quiz_data) if i != state["current_index"]]
         else:
-            question_text = f"Câu {current_num}/{total}: Từ \"{japanese}\" (romaji: {romaji}) có nghĩa là gì?"
+            question_text = f"Câu {current_num}/{total}: Từ \"{japanese}\" (kana: {kana}) có nghĩa là gì?"
             correct = meaning
             wrongs = [r[2] for i, r in enumerate(quiz_data) if i != state["current_index"]]
 
@@ -165,7 +168,7 @@ def run_quiz(user_name, mode="japanese_to_meaning"):
         total_questions = len(quiz_data)
         correct = state["score"]
         messagebox.showinfo("🎉 Kết thúc", f"✔ Bạn đã hoàn thành quiz!\n"
-                                               f"✅ Số câu đúng: {correct}/{total_questions}\n")
+                                           f"✅ Số câu đúng: {correct}/{total_questions}\n")
         win.destroy()
         show_menu(user_name)
 
