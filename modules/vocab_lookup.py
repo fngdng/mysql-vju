@@ -5,6 +5,13 @@ def show_vocab_lookup(user_name):
     from modules.vocab_add import show_vocab_add
 
     win = tk.Tk()
+    def center_window(win, width, height):
+        screen_width = win.winfo_screenwidth()
+        screen_height = win.winfo_screenheight()
+        x = int((screen_width / 2) - (width / 2))
+        y = int((screen_height / 2) - (height / 2))
+        win.geometry(f"{width}x{height}+{x}+{y}")
+    center_window(win, 750, 500)
     win.title("Tra từ vựng")
     win.geometry("750x500")
     win.configure(bg="#f7f9fa")
@@ -29,19 +36,19 @@ def show_vocab_lookup(user_name):
             result.config(text="⚠️ Vui lòng nhập từ cần tra")
             return
 
-        conn = sqlite3.connect("D:/Japanese_learning_app/DB/japanese.db")
+        conn = sqlite3.connect("./DB/japanese.db")
         cursor = conn.cursor()
 
         if mode_var.get() == "jp":
-            cursor.execute("SELECT japanese, kana, meaning FROM Words WHERE japanese = ?", (word,))
+            cursor.execute("SELECT japanese, romaji, meaning FROM Words WHERE japanese = ?", (word,))
         else:
-            cursor.execute("SELECT japanese, kana, meaning FROM Words WHERE meaning LIKE ?", (f"%{word}%",))
+            cursor.execute("SELECT japanese, romaji, meaning FROM Words WHERE meaning LIKE ?", (f"%{word}%",))
 
         row = cursor.fetchone()
         conn.close()
 
         if row:
-            result.config(text=f"Từ: {row[0]}\nKana: {row[1]}\nNghĩa: {row[2]}")
+            result.config(text=f"Từ: {row[0]}\nRomaji: {row[1]}\nNghĩa: {row[2]}")
         else:
             result.config(text="❌ Không tìm thấy từ trong cơ sở dữ liệu.")
 

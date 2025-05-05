@@ -3,15 +3,13 @@ from tkinter import messagebox
 import sqlite3
 from modules.homepage import show_homepage
 
-# Chỉ import khi gọi hàm, để tránh vòng lặp import
-# from modules.register import register_window
 
 def login_window():
     def login():
         email = entry_email.get()
         password = entry_password.get()
 
-        conn = sqlite3.connect("D:/Japanese_learning_app/DB/japanese.db")
+        conn = sqlite3.connect("./DB/japanese.db")
         cursor = conn.cursor()
         cursor.execute("SELECT name FROM Users WHERE email = ? AND password = ?", (email, password))
         user = cursor.fetchone()
@@ -30,8 +28,15 @@ def login_window():
         register_window()
 
     login_win = tk.Tk()
+    def center_window(win, width, height):
+        screen_width = win.winfo_screenwidth()
+        screen_height = win.winfo_screenheight()
+        x = int((screen_width / 2) - (width / 2))
+        y = int((screen_height / 2) - (height / 2))
+        win.geometry(f"{width}x{height}+{x}+{y}")
+    center_window(login_win, 600, 500)
     login_win.title("Đăng nhập")
-    login_win.geometry("600x400")
+    login_win.geometry("600x500")
 
     tk.Label(login_win, text="Đăng nhập", font=("Arial", 24, "bold")).pack(pady=30)
 

@@ -1,6 +1,6 @@
 import sqlite3
 
-conn = sqlite3.connect("D:/Japanese_learning_app/japanese.db")
+conn = sqlite3.connect("./DB/japanese.db")
 cursor = conn.cursor()
 
 cursor.execute("""

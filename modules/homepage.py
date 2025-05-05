@@ -8,6 +8,13 @@ def show_homepage(user_name):
         show_menu(user_name)
 
     home = tk.Tk()
+    def center_window(win, width, height):
+        screen_width = win.winfo_screenwidth()
+        screen_height = win.winfo_screenheight()
+        x = int((screen_width / 2) - (width / 2))
+        y = int((screen_height / 2) - (height / 2))
+        win.geometry(f"{width}x{height}+{x}+{y}")
+    center_window(home, 900, 600)    
     home.title("Trang chủ")
     home.geometry("900x600")
     home.configure(bg="#f0f4f7")

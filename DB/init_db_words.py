@@ -1,18 +1,20 @@
+
 import sqlite3
 
-conn = sqlite3.connect("D:/Japanese_learning_app/DB/japanese.db")
+
+conn = sqlite3.connect("./DB/japanese.db")
 cursor = conn.cursor()
 
 cursor.execute("""
-CREATE TABLE IF NOT EXISTS Users (
+CREATE TABLE IF NOT EXISTS Words (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL,
-    email TEXT NOT NULL UNIQUE,
-    password TEXT NOT NULL,
-    birthday TEXT
+    japanese TEXT NOT NULL,
+    romaji TEXT,
+    meaning TEXT,
+    topic TEXT
 );
 """)
 
 conn.commit()
 conn.close()
-print("Xong")
+print("✅ Đã tạo bảng Words với cột romaji.")

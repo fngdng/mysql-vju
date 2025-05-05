@@ -1,22 +1,37 @@
 import tkinter as tk
 from tkinter import messagebox
 import sqlite3
-# Không import login_window ở đầu file nữa để tránh vòng lặp
-
+import re
 
 def register_window():
     def register():
-        name = entry_name.get()
-        email = entry_email.get()
-        password = entry_password.get()
-        birthday = entry_birthday.get()
+        name = entry_name.get().strip()
+        email = entry_email.get().strip()
+        password = entry_password.get().strip()
+        birthday = entry_birthday.get().strip()
 
-        if not name or not email or not password:
+        if not name or not email or not password or not birthday:
             messagebox.showwarning("Thiếu thông tin", "Vui lòng điền đầy đủ thông tin.")
             return
 
+        if not re.match(r"^[A-Za-zÀ-ỹ\s]+$", name):
+            messagebox.showerror("Lỗi tên", "Tên chỉ được chứa chữ cái và khoảng trắng!")
+            return
+
+        if not re.match(r"^[\w\.-]+@[\w\.-]+\.\w{2,}$", email):
+            messagebox.showerror("Lỗi email", "Email không đúng định dạng!")
+            return
+
+        if len(password) < 5:
+            messagebox.showerror("Lỗi mật khẩu", "Mật khẩu phải có ít nhất 5 ký tự!")
+            return
+
+        if not re.match(r'^\d{2}/\d{2}/\d{4}$', birthday):
+            messagebox.showerror("Lỗi ngày sinh", "Ngày sinh phải theo định dạng dd/mm/yyyy (VD: 01/01/2005)")
+            return
+
         try:
-            conn = sqlite3.connect("D:/Japanese_learning_app/DB/japanese.db")
+            conn = sqlite3.connect("./DB/japanese.db")
             cursor = conn.cursor()
             cursor.execute("""
                 INSERT INTO Users (name, email, password, birthday)
@@ -33,7 +48,21 @@ def register_window():
         except sqlite3.IntegrityError:
             messagebox.showerror("Lỗi", "Email đã tồn tại!")
 
+    def go_back_login():
+        register_win.destroy()
+        from modules.login import login_window
+        login_window()
+
     register_win = tk.Tk()
+
+    def center_window(win, width, height):
+        screen_width = win.winfo_screenwidth()
+        screen_height = win.winfo_screenheight()
+        x = int((screen_width / 2) - (width / 2))
+        y = int((screen_height / 2) - (height / 2))
+        win.geometry(f"{width}x{height}+{x}+{y}")
+
+    center_window(register_win, 600, 500)
     register_win.title("Đăng ký")
     register_win.geometry("600x500")
 
@@ -51,10 +80,12 @@ def register_window():
     entry_password = tk.Entry(register_win, show="*", font=("Arial", 12))
     entry_password.pack(pady=10)
 
-    tk.Label(register_win, text="Ngày sinh", font=("Arial", 12)).pack()
+    tk.Label(register_win, text="Ngày sinh (dd/mm/yyyy)", font=("Arial", 12)).pack()
     entry_birthday = tk.Entry(register_win, font=("Arial", 12))
     entry_birthday.pack(pady=10)
 
     tk.Button(register_win, text="Đăng ký", command=register, bg="black", fg="white", font=("Arial", 12), width=20).pack(pady=20)
+
+    tk.Button(register_win, text="⬅ Đã có tài khoản? Quay lại đăng nhập", font=("Arial", 11), bg="#dfe6e9", command=go_back_login).pack(pady=10)
 
     register_win.mainloop()
