@@ -3,6 +3,7 @@ from tkinter import messagebox
 import sqlite3
 import random
 from modules.menu import show_menu
+from modules.db_helper import get_db_path
 
 def show_quiz(user_name):
     def open_mode_selection():
@@ -58,9 +59,9 @@ def run_quiz(user_name, mode="japanese_to_meaning"):
     tk.Label(win, text=f"🔍 {user_name}, hãy chọn đáp án đúng:", font=("Arial", 14), bg="#f7f9fa").pack(pady=20)
 
     def get_quiz_data():
-      conn = sqlite3.connect('./DB/japanese.db')
+      conn = sqlite3.connect(get_db_path())
       cursor = conn.cursor()
-      cursor.execute("SELECT japanese, kana, meaning FROM Words WHERE japanese IS NOT NULL AND kana IS NOT NULL AND meaning IS NOT NULL")
+      cursor.execute("SELECT japanese, romaji, meaning FROM Words WHERE japanese IS NOT NULL AND romaji IS NOT NULL AND meaning IS NOT NULL")
       data = cursor.fetchall()
       conn.close()
       return [row for row in data if all(row)]
@@ -81,17 +82,17 @@ def run_quiz(user_name, mode="japanese_to_meaning"):
             return None, None, None
 
         row = quiz_data[state["current_index"]]
-        japanese, kana, meaning = row
+        japanese, romaji, meaning = row
 
         current_num = state["current_index"] + 1
         total = len(quiz_data)
 
         if mode == "meaning_to_japanese":
             question_text = f"Câu {current_num}/{total}: \"{meaning}\" là từ nào sau đây?"
-            correct = f"{japanese} ({kana})"
+            correct = f"{japanese} ({romaji})"
             wrongs = [f"{r[0]} ({r[1]})" for i, r in enumerate(quiz_data) if i != state["current_index"]]
         else:
-            question_text = f"Câu {current_num}/{total}: Từ \"{japanese}\" (kana: {kana}) có nghĩa là gì?"
+            question_text = f"Câu {current_num}/{total}: Từ \"{japanese}\" (romaji: {romaji}) có nghĩa là gì?"
             correct = meaning
             wrongs = [r[2] for i, r in enumerate(quiz_data) if i != state["current_index"]]
 
@@ -107,7 +108,7 @@ def run_quiz(user_name, mode="japanese_to_meaning"):
         current_row = quiz_data[state["current_index"] - 1] if state["current_index"] > 0 else quiz_data[0]
         japanese, romaji, meaning = current_row
 
-        conn = sqlite3.connect('./DB/japanese.db')
+        conn = sqlite3.connect(get_db_path())
         cursor = conn.cursor()
         cursor.execute("SELECT email FROM Users WHERE name = ?", (user_name,))
         user = cursor.fetchone()

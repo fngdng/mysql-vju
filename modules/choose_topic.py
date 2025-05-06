@@ -5,6 +5,7 @@ def show_topic_selection(user_name):
     from tkinter import messagebox
     from modules.menu import show_menu
     from modules.topic_word import show_words_by_topic
+    from modules.db_helper import get_db_path
 
     def load_words_by_topic(selected_topic):
         if not selected_topic:
@@ -29,7 +30,7 @@ def show_topic_selection(user_name):
     tk.Label(win, text=f"📚 Xin chào {user_name}!\nChọn một chủ đề để học từ vựng", font=("Arial", 14, "bold"), bg="#fef9e7", justify="center").pack(pady=20)
 
     # Lấy danh sách chủ đề từ DB
-    conn = sqlite3.connect("./DB/japanese.db")
+    conn = sqlite3.connect(get_db_path())
     cursor = conn.cursor()
     cursor.execute("SELECT DISTINCT topic FROM Words WHERE topic IS NOT NULL AND topic != ''")
     topics = [row[0] for row in cursor.fetchall()]

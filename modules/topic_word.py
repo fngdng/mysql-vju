@@ -3,8 +3,9 @@ def show_words_by_topic(user_name, topic):
     import tkinter as tk
     import sqlite3
     from modules.choose_topic import show_topic_selection
+    from modules.db_helper import get_db_path
 
-    conn = sqlite3.connect("./DB/japanese.db")
+    conn = sqlite3.connect(get_db_path())
     cursor = conn.cursor()
     cursor.execute("SELECT japanese, romaji, meaning FROM Words WHERE topic = ?", (topic,))
     words = cursor.fetchall()

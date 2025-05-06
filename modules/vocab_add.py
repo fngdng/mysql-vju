@@ -3,6 +3,7 @@ def show_vocab_add(user_name):
     import sqlite3
     from tkinter import messagebox
     from modules.vocab_lookup import show_vocab_lookup
+    from modules.db_helper import get_db_path
 
     add_win = tk.Tk()
     def center_window(win, width, height):
@@ -34,7 +35,7 @@ def show_vocab_add(user_name):
             messagebox.showwarning("Thiếu dữ liệu", "Vui lòng nhập ít nhất từ và nghĩa.")
             return
 
-        conn = sqlite3.connect("./DB/japanese.db")
+        conn = sqlite3.connect(get_db_path())
         cursor = conn.cursor()
         cursor.execute("INSERT INTO Words (japanese, romaji, meaning, topic) VALUES (?, ?, ?, ?)",
                        (japanese, romaji, meaning, topic))

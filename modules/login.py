@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 import sqlite3
 from modules.homepage import show_homepage
+from modules.db_helper import get_db_path
 
 
 def login_window():
@@ -9,7 +10,7 @@ def login_window():
         email = entry_email.get()
         password = entry_password.get()
 
-        conn = sqlite3.connect("./DB/japanese.db")
+        conn = sqlite3.connect(get_db_path())
         cursor = conn.cursor()
         cursor.execute("SELECT name FROM Users WHERE email = ? AND password = ?", (email, password))
         user = cursor.fetchone()

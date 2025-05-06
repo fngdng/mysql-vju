@@ -2,9 +2,10 @@ import tkinter as tk
 import sqlite3
 from tkinter import messagebox
 from modules.menu import show_menu
+from modules.db_helper import get_db_path
 
 def show_progress(user_name):
-    conn = sqlite3.connect("./DB/japanese.db")
+    conn = sqlite3.connect(get_db_path())
     cursor = conn.cursor()
 
     cursor.execute("SELECT email FROM Users WHERE name = ?", (user_name,))

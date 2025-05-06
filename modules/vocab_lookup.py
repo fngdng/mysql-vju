@@ -3,6 +3,7 @@ def show_vocab_lookup(user_name):
     import sqlite3
     from modules.menu import show_menu
     from modules.vocab_add import show_vocab_add
+    from modules.db_helper import get_db_path
 
     win = tk.Tk()
     def center_window(win, width, height):
@@ -36,7 +37,7 @@ def show_vocab_lookup(user_name):
             result.config(text="⚠️ Vui lòng nhập từ cần tra")
             return
 
-        conn = sqlite3.connect("./DB/japanese.db")
+        conn = sqlite3.connect(get_db_path())
         cursor = conn.cursor()
 
         if mode_var.get() == "jp":
