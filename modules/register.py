@@ -1,19 +1,35 @@
 import tkinter as tk
 from tkinter import messagebox
 import sqlite3
+import re
 from modules.db_helper import get_db_path
-# Không import login_window ở đầu file nữa để tránh vòng lặp
 
 
 def register_window():
     def register():
-        name = entry_name.get()
-        email = entry_email.get()
-        password = entry_password.get()
-        birthday = entry_birthday.get()
+        name = entry_name.get().strip()
+        email = entry_email.get().strip()
+        password = entry_password.get().strip()
+        birthday = entry_birthday.get().strip()
 
-        if not name or not email or not password:
+        if not name or not email or not password or not birthday:
             messagebox.showwarning("Thiếu thông tin", "Vui lòng điền đầy đủ thông tin.")
+            return
+
+        if not re.match(r"^[A-Za-zÀ-ỹ\s]+$", name):
+            messagebox.showerror("Lỗi tên", "Tên chỉ được chứa chữ cái và khoảng trắng!")
+            return
+
+        if not re.match(r"^[\w\.-]+@[\w\.-]+\.\w{2,}$", email):
+            messagebox.showerror("Lỗi email", "Email không đúng định dạng!")
+            return
+
+        if len(password) < 5:
+            messagebox.showerror("Lỗi mật khẩu", "Mật khẩu phải có ít nhất 5 ký tự!")
+            return
+
+        if not re.match(r'^\d{2}/\d{2}/\d{4}$', birthday):
+            messagebox.showerror("Lỗi ngày sinh", "Ngày sinh phải theo định dạng dd/mm/yyyy (VD: 01/01/2005)")
             return
 
         try:
@@ -66,7 +82,7 @@ def register_window():
     entry_password = tk.Entry(register_win, show="*", font=("Arial", 12))
     entry_password.pack(pady=10)
 
-    tk.Label(register_win, text="Ngày sinh", font=("Arial", 12)).pack()
+    tk.Label(register_win, text="Ngày sinh (dd/mm/yyyy)", font=("Arial", 12)).pack()
     entry_birthday = tk.Entry(register_win, font=("Arial", 12))
     entry_birthday.pack(pady=10)
 
