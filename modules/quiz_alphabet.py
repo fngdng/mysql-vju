@@ -1,4 +1,3 @@
-
 import tkinter as tk
 from tkinter import messagebox
 import sqlite3
@@ -36,14 +35,18 @@ def show_alphabet_quiz(user_name):
 
     state = {
         "score": 0,
-        "current_index": 0
+        "current_index": -1,
+        "answered": True  # Cho phép hiển thị câu đầu
     }
 
+    current_data = {"correct": None}
+
     def create_question():
-        if state["current_index"] >= len(quiz_data):
+        if state["current_index"] >= len(quiz_data) - 1:
             end_quiz()
             return None, None, None
 
+        state["current_index"] += 1
         row = quiz_data[state["current_index"]]
         hira, kata, romaji = row
 
@@ -68,7 +71,12 @@ def show_alphabet_quiz(user_name):
         return question_text, correct, options
 
     def check_answer(selected_option):
+        if state["answered"]:
+            return
+
         disable_buttons()
+        state["answered"] = True
+
         correct = current_data["correct"]
 
         if selected_option == correct:
@@ -86,8 +94,14 @@ def show_alphabet_quiz(user_name):
             btn.config(state="normal")
 
     def next_question():
+        if not state["answered"]:
+            messagebox.showwarning("⚠️ Cảnh báo", "Vui lòng chọn một đáp án trước khi tiếp tục.")
+            return
+
+        state["answered"] = False
         result_label.config(text="")
         enable_buttons()
+
         question, correct_answer, options = create_question()
         if not question:
             return
@@ -95,7 +109,6 @@ def show_alphabet_quiz(user_name):
         question_label.config(text=question)
         for i, option in enumerate(options):
             option_buttons[i].config(text=option, command=lambda opt=option: check_answer(opt))
-        state["current_index"] += 1
 
     def end_quiz():
         total_questions = len(quiz_data)
@@ -104,8 +117,6 @@ def show_alphabet_quiz(user_name):
                                            f"✅ Số câu đúng: {correct}/{total_questions}\n")
         win.destroy()
         show_menu(user_name)
-
-    current_data = {"correct": None}
 
     question_label = tk.Label(win, text="", font=("Arial", 16), bg="#f7f9fa", wraplength=700)
     question_label.pack(pady=20)
