@@ -1,7 +1,14 @@
-def show_alphabet():
+import sqlite3
+from modules.db_helper import get_db_path
+
+def show_alphabet(user_name):
     import tkinter as tk
     from modules.menu import show_menu
-
+    conn = sqlite3.connect(get_db_path())
+    cursor = conn.cursor()
+    cursor.execute("SELECT email FROM Users WHERE name = ?", (user_name,))
+    email = cursor.fetchone()
+    conn.close()
     hiragana = [
         ["あ", "い", "う", "え", "お"],
         ["か", "き", "く", "け", "こ"],
@@ -76,6 +83,6 @@ def show_alphabet():
 
     hien_bang("hira")  # mặc định hiển thị bảng hiragana
 
-    tk.Button(win, text="⬅ Quay lại menu", font=("Arial", 11), bg="#dfe6e9", command=lambda: (win.destroy(), show_menu("User"))).pack(pady=10)
+    tk.Button(win, text="⬅ Quay lại menu", font=("Arial", 11), bg="#dfe6e9", command=lambda: (win.destroy(), show_menu(user_name))).pack(pady=10)
 
     win.mainloop()

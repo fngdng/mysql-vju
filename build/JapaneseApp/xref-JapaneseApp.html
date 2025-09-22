@@ -1657,6 +1657,7 @@ imported by:
  &#8226;   <a href="#calendar">calendar</a>
  &#8226;   <a href="#email.utils">email.utils</a>
  &#8226;   <a href="#modules.quiz">modules.quiz</a>
+ &#8226;   <a href="#modules.topic_word">modules.topic_word</a>
  &#8226;   <a href="#sqlite3.dbapi2">sqlite3.dbapi2</a>
 
   </div>
@@ -4993,6 +4994,7 @@ imports:
  &#8226;   <a href="#importlib">importlib</a>
  &#8226;   <a href="#importlib._bootstrap">importlib._bootstrap</a>
  &#8226;   <a href="#importlib._bootstrap_external">importlib._bootstrap_external</a>
+ &#8226;   <a href="#importlib.machinery">importlib.machinery</a>
  &#8226;   <a href="#sys">sys</a>
  &#8226;   <a href="#warnings">warnings</a>
 
@@ -5123,7 +5125,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#importlib.abc">importlib.abc</a>
+    <a href="#importlib">importlib</a>
+ &#8226;   <a href="#importlib.abc">importlib.abc</a>
  &#8226;   <a href="#inspect">inspect</a>
  &#8226;   <a href="#py_compile">py_compile</a>
 
@@ -5781,10 +5784,12 @@ imported by:
  &#8226;   <a href="#modules.menu">modules.menu</a>
  &#8226;   <a href="#modules.progress_tracker">modules.progress_tracker</a>
  &#8226;   <a href="#modules.quiz">modules.quiz</a>
+ &#8226;   <a href="#modules.quiz_alphabet">modules.quiz_alphabet</a>
  &#8226;   <a href="#modules.register">modules.register</a>
  &#8226;   <a href="#modules.topic_word">modules.topic_word</a>
  &#8226;   <a href="#modules.vocab_add">modules.vocab_add</a>
  &#8226;   <a href="#modules.vocab_lookup">modules.vocab_lookup</a>
+ &#8226;   <a href="#modules.word_history_ui">modules.word_history_ui</a>
 
   </div>
 
@@ -5796,7 +5801,9 @@ imported by:
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#modules">modules</a>
+ &#8226;   <a href="#modules.db_helper">modules.db_helper</a>
  &#8226;   <a href="#modules.menu">modules.menu</a>
+ &#8226;   <a href="#sqlite3">sqlite3</a>
  &#8226;   <a href="#tkinter">tkinter</a>
 
   </div>
@@ -5844,14 +5851,17 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#modules.choose_topic">modules.choose_topic</a>
+    <a href="#modules.alphabet">modules.alphabet</a>
+ &#8226;   <a href="#modules.choose_topic">modules.choose_topic</a>
  &#8226;   <a href="#modules.login">modules.login</a>
  &#8226;   <a href="#modules.progress_tracker">modules.progress_tracker</a>
  &#8226;   <a href="#modules.quiz">modules.quiz</a>
+ &#8226;   <a href="#modules.quiz_alphabet">modules.quiz_alphabet</a>
  &#8226;   <a href="#modules.register">modules.register</a>
  &#8226;   <a href="#modules.topic_word">modules.topic_word</a>
  &#8226;   <a href="#modules.vocab_add">modules.vocab_add</a>
  &#8226;   <a href="#modules.vocab_lookup">modules.vocab_lookup</a>
+ &#8226;   <a href="#modules.word_history_ui">modules.word_history_ui</a>
 
   </div>
 
@@ -5910,7 +5920,9 @@ imports:
  &#8226;   <a href="#modules.choose_topic">modules.choose_topic</a>
  &#8226;   <a href="#modules.progress_tracker">modules.progress_tracker</a>
  &#8226;   <a href="#modules.quiz">modules.quiz</a>
+ &#8226;   <a href="#modules.quiz_alphabet">modules.quiz_alphabet</a>
  &#8226;   <a href="#modules.vocab_lookup">modules.vocab_lookup</a>
+ &#8226;   <a href="#modules.word_history_ui">modules.word_history_ui</a>
  &#8226;   <a href="#tkinter">tkinter</a>
 
   </div>
@@ -5921,7 +5933,9 @@ imported by:
  &#8226;   <a href="#modules.homepage">modules.homepage</a>
  &#8226;   <a href="#modules.progress_tracker">modules.progress_tracker</a>
  &#8226;   <a href="#modules.quiz">modules.quiz</a>
+ &#8226;   <a href="#modules.quiz_alphabet">modules.quiz_alphabet</a>
  &#8226;   <a href="#modules.vocab_lookup">modules.vocab_lookup</a>
+ &#8226;   <a href="#modules.word_history_ui">modules.word_history_ui</a>
 
   </div>
 
@@ -5972,6 +5986,28 @@ imported by:
 </div>
 
 <div class="node">
+  <a name="modules.quiz_alphabet"></a>
+  <a target="code" href="///D:/Japanese_learning_app/modules/quiz_alphabet.py" type="text/plain"><tt>modules.quiz_alphabet</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#modules">modules</a>
+ &#8226;   <a href="#modules.db_helper">modules.db_helper</a>
+ &#8226;   <a href="#modules.menu">modules.menu</a>
+ &#8226;   <a href="#random">random</a>
+ &#8226;   <a href="#sqlite3">sqlite3</a>
+ &#8226;   <a href="#tkinter">tkinter</a>
+ &#8226;   <a href="#tkinter.messagebox">tkinter.messagebox</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#modules.menu">modules.menu</a>
+
+  </div>
+
+</div>
+
+<div class="node">
   <a name="modules.register"></a>
   <a target="code" href="///D:/Japanese_learning_app/modules/register.py" type="text/plain"><tt>modules.register</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
@@ -5998,7 +6034,8 @@ imported by:
   <a target="code" href="///D:/Japanese_learning_app/modules/topic_word.py" type="text/plain"><tt>modules.topic_word</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
-    <a href="#modules">modules</a>
+    <a href="#datetime">datetime</a>
+ &#8226;   <a href="#modules">modules</a>
  &#8226;   <a href="#modules.choose_topic">modules.choose_topic</a>
  &#8226;   <a href="#modules.db_helper">modules.db_helper</a>
  &#8226;   <a href="#sqlite3">sqlite3</a>
@@ -6051,6 +6088,27 @@ imports:
 imported by:
     <a href="#modules.menu">modules.menu</a>
  &#8226;   <a href="#modules.vocab_add">modules.vocab_add</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="modules.word_history_ui"></a>
+  <a target="code" href="///D:/Japanese_learning_app/modules/word_history_ui.py" type="text/plain"><tt>modules.word_history_ui</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#modules">modules</a>
+ &#8226;   <a href="#modules.db_helper">modules.db_helper</a>
+ &#8226;   <a href="#modules.menu">modules.menu</a>
+ &#8226;   <a href="#sqlite3">sqlite3</a>
+ &#8226;   <a href="#tkinter">tkinter</a>
+ &#8226;   <a href="#tkinter.ttk">tkinter.ttk</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#modules.menu">modules.menu</a>
 
   </div>
 
@@ -6464,6 +6522,7 @@ imported by:
     <a href="#email.generator">email.generator</a>
  &#8226;   <a href="#email.utils">email.utils</a>
  &#8226;   <a href="#modules.quiz">modules.quiz</a>
+ &#8226;   <a href="#modules.quiz_alphabet">modules.quiz_alphabet</a>
  &#8226;   <a href="#statistics">statistics</a>
  &#8226;   <a href="#tempfile">tempfile</a>
 
@@ -6793,14 +6852,17 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#modules.choose_topic">modules.choose_topic</a>
+    <a href="#modules.alphabet">modules.alphabet</a>
+ &#8226;   <a href="#modules.choose_topic">modules.choose_topic</a>
  &#8226;   <a href="#modules.login">modules.login</a>
  &#8226;   <a href="#modules.progress_tracker">modules.progress_tracker</a>
  &#8226;   <a href="#modules.quiz">modules.quiz</a>
+ &#8226;   <a href="#modules.quiz_alphabet">modules.quiz_alphabet</a>
  &#8226;   <a href="#modules.register">modules.register</a>
  &#8226;   <a href="#modules.topic_word">modules.topic_word</a>
  &#8226;   <a href="#modules.vocab_add">modules.vocab_add</a>
  &#8226;   <a href="#modules.vocab_lookup">modules.vocab_lookup</a>
+ &#8226;   <a href="#modules.word_history_ui">modules.word_history_ui</a>
  &#8226;   <a href="#sqlite3">sqlite3</a>
  &#8226;   <a href="#sqlite3.__main__">sqlite3.__main__</a>
  &#8226;   <a href="#sqlite3.dbapi2">sqlite3.dbapi2</a>
@@ -7305,10 +7367,12 @@ imported by:
  &#8226;   <a href="#modules.menu">modules.menu</a>
  &#8226;   <a href="#modules.progress_tracker">modules.progress_tracker</a>
  &#8226;   <a href="#modules.quiz">modules.quiz</a>
+ &#8226;   <a href="#modules.quiz_alphabet">modules.quiz_alphabet</a>
  &#8226;   <a href="#modules.register">modules.register</a>
  &#8226;   <a href="#modules.topic_word">modules.topic_word</a>
  &#8226;   <a href="#modules.vocab_add">modules.vocab_add</a>
  &#8226;   <a href="#modules.vocab_lookup">modules.vocab_lookup</a>
+ &#8226;   <a href="#modules.word_history_ui">modules.word_history_ui</a>
  &#8226;   <a href="#tkinter.commondialog">tkinter.commondialog</a>
  &#8226;   <a href="#tkinter.constants">tkinter.constants</a>
  &#8226;   <a href="#tkinter.messagebox">tkinter.messagebox</a>
@@ -7365,6 +7429,7 @@ imported by:
  &#8226;   <a href="#modules.login">modules.login</a>
  &#8226;   <a href="#modules.progress_tracker">modules.progress_tracker</a>
  &#8226;   <a href="#modules.quiz">modules.quiz</a>
+ &#8226;   <a href="#modules.quiz_alphabet">modules.quiz_alphabet</a>
  &#8226;   <a href="#modules.register">modules.register</a>
  &#8226;   <a href="#modules.vocab_add">modules.vocab_add</a>
  &#8226;   <a href="#tkinter">tkinter</a>
@@ -7384,6 +7449,7 @@ imports:
   <div class="import">
 imported by:
     <a href="#modules.choose_topic">modules.choose_topic</a>
+ &#8226;   <a href="#modules.word_history_ui">modules.word_history_ui</a>
  &#8226;   <a href="#tkinter">tkinter</a>
 
   </div>

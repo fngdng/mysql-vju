@@ -17,7 +17,6 @@ def show_quiz(user_name):
             win.geometry(f"{width}x{height}+{x}+{y}")
         center_window(mode_win, 750, 500)
         mode_win.title("Chọn chế độ quiz")
-        mode_win.geometry("750x500")
         mode_win.configure(bg="#f7f9fa")
 
         tk.Label(mode_win, text=f"🎓 Xin chào {user_name}, chọn chế độ:", font=("Arial", 14), bg="#f7f9fa").pack(pady=20)
@@ -35,16 +34,15 @@ def show_quiz(user_name):
 
     open_mode_selection()
 
-
 def show_quiz_meaning_to_japanese(user_name):
     run_quiz(user_name, mode="meaning_to_japanese")
 
 def show_quiz_japanese_to_meaning(user_name):
     run_quiz(user_name, mode="japanese_to_meaning")
 
-
 def run_quiz(user_name, mode="japanese_to_meaning"):
     win = tk.Tk()
+
     def center_window(win, width, height):
         screen_width = win.winfo_screenwidth()
         screen_height = win.winfo_screenheight()
@@ -52,20 +50,19 @@ def run_quiz(user_name, mode="japanese_to_meaning"):
         y = int((screen_height / 2) - (height / 2))
         win.geometry(f"{width}x{height}+{x}+{y}")
     center_window(win, 750, 500)
+
     win.title("Làm bài quiz")
-    win.geometry("750x500")
     win.configure(bg="#f7f9fa")
 
     tk.Label(win, text=f"🔍 {user_name}, hãy chọn đáp án đúng:", font=("Arial", 14), bg="#f7f9fa").pack(pady=20)
 
     def get_quiz_data():
-      conn = sqlite3.connect(get_db_path())
-      cursor = conn.cursor()
-      cursor.execute("SELECT japanese, romaji, meaning FROM Words WHERE japanese IS NOT NULL AND romaji IS NOT NULL AND meaning IS NOT NULL")
-      data = cursor.fetchall()
-      conn.close()
-      return [row for row in data if all(row)]
-
+        conn = sqlite3.connect(get_db_path())
+        cursor = conn.cursor()
+        cursor.execute("SELECT japanese, romaji, meaning FROM Words WHERE japanese IS NOT NULL AND romaji IS NOT NULL AND meaning IS NOT NULL")
+        data = cursor.fetchall()
+        conn.close()
+        return [row for row in data if all(row)]
 
     all_data = get_quiz_data()
     random.shuffle(all_data)
@@ -73,13 +70,18 @@ def run_quiz(user_name, mode="japanese_to_meaning"):
 
     state = {
         "score": 0,
-        "current_index": 0
+        "current_index": -1,
+        "answered": True  # Cho phép hiển thị câu đầu
     }
 
+    current_data = {"correct": None}
+
     def create_question():
-        if state["current_index"] >= len(quiz_data):
+        if state["current_index"] >= len(quiz_data) - 1:
             end_quiz()
             return None, None, None
+
+        state["current_index"] += 1
 
         row = quiz_data[state["current_index"]]
         japanese, romaji, meaning = row
@@ -103,9 +105,14 @@ def run_quiz(user_name, mode="japanese_to_meaning"):
         return question_text, correct, options
 
     def check_answer(selected_option):
+        if state["answered"]:
+            return
+
         disable_buttons()
+        state["answered"] = True
+
         correct = current_data["correct"]
-        current_row = quiz_data[state["current_index"] - 1] if state["current_index"] > 0 else quiz_data[0]
+        current_row = quiz_data[state["current_index"]]
         japanese, romaji, meaning = current_row
 
         conn = sqlite3.connect(get_db_path())
@@ -154,8 +161,14 @@ def run_quiz(user_name, mode="japanese_to_meaning"):
             btn.config(state="normal")
 
     def next_question():
+        if not state["answered"]:
+            messagebox.showwarning("⚠️ Cảnh báo", "Vui lòng chọn một đáp án trước khi tiếp tục.")
+            return
+
+        state["answered"] = False
         result_label.config(text="")
         enable_buttons()
+
         question, correct_answer, options = create_question()
         if not question:
             return
@@ -163,7 +176,6 @@ def run_quiz(user_name, mode="japanese_to_meaning"):
         question_label.config(text=question)
         for i, option in enumerate(options):
             option_buttons[i].config(text=option, command=lambda opt=option: check_answer(opt))
-        state["current_index"] += 1
 
     def end_quiz():
         total_questions = len(quiz_data)
@@ -172,8 +184,6 @@ def run_quiz(user_name, mode="japanese_to_meaning"):
                                            f"✅ Số câu đúng: {correct}/{total_questions}\n")
         win.destroy()
         show_menu(user_name)
-
-    current_data = {"correct": None}
 
     question_label = tk.Label(win, text="", font=("Arial", 16), bg="#f7f9fa", wraplength=700)
     question_label.pack(pady=20)
